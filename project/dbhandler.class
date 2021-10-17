@@ -1,0 +1,61 @@
+public class MyDBHandler extends SQLiteOpenHelper {
+
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "befree.db";
+    public static final String TABLE_NAME = "Login";
+    public static final String COLUMN_1 = "name";
+    public static final String COLUMN_2 = "password";
+    public static final String COLUMN_3 = "email";
+    public static final String COLUMN_4 = "city";
+    public static final String COLUMN_5 = "category";
+    public static final String COLUMN_6="phone";
+
+    //initialize the database
+    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE login" + TABLE_NAME + "(" + COLUMN_1 +
+                "TEXT," + COLUMN_2 + "TEXT,"+COLUMN_3 +"TEXT PRIMARY KEY,"+COLUMN_4+"TEXT,"+COLUMN_5+"TEXT,"+COLUMN_6+"INTEGER )";
+        db.execSQL(CREATE_TABLE);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {}
+    public String loadHandler() {
+        String result = "";
+        String query = "Select*FROM login" + TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()) {
+            String result_0 = cursor.getString(0);
+            String result_1 = cursor.getString(1);
+            String result_2=cursor.getString(2);
+            String result_3=cursor.getString(3);
+            String result_4=cursor.getString(4);
+            long result_5=cursor.getLong(5);
+            result += result_0+ " " + result_1 +" "+result_2+" "+result_3+" "+result_4+" "+String.valueOf(result_5)+
+                    System.getProperty("line.separator");
+        }
+        cursor.close();
+        db.close();
+        return result;
+
+    }
+    public void addHandler(login user ) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_1, user.getName());
+        values.put(COLUMN_2, user.getPassword());
+        values.put(COLUMN_3,user.getEmail());
+        values.put(COLUMN_4,user.getCity());
+        values.put(COLUMN_5,user.getCategory());
+        values.put(COLUMN_6,user.getno());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_NAME, null, values);
+        db.close();
+    }
+
+
+
+}

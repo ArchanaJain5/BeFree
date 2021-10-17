@@ -1,1 +1,2 @@
-# BeFree
+# BeFree <br><br>
+The solution provides a smart phone application which will keep track of the viral and mosquito borne diseases region wise. This data will then be send to the cloud channel ThingSpeak where the data will be analyzed and the results will be send to the authorities to take necessary actions and the data will be updated in the app to alert users so that users can use that data to prepare and prevent themselves from such diseases. 
